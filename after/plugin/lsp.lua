@@ -16,6 +16,28 @@ local lsp_attach = function(client, bufnr)
     vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
     vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
     vim.keymap.set('n', '<leader>r', vim.lsp.buf.code_action, opts)
+
+    if client.name == "gopls" then
+        local augroup = vim.api.nvim_create_augroup("GoAutoCmds", { clear = true })
+
+        -- reorganize imports before saving
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = augroup,
+            pattern = "*.go",
+            callback = function()
+                vim.lsp.buf.format()
+            end,
+        })
+
+        -- update imports after saving
+        vim.api.nvim_create_autocmd("BufWritePost", {
+            group = augroup,
+            pattern = "*.go",
+            callback = function()
+                vim.fn.system("go get ./...")
+            end,
+        })
+    end
 end
 
 lsp_zero.extend_lspconfig({
