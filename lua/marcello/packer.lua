@@ -9,6 +9,7 @@ return require('packer').startup(function(use)
     use 'folke/tokyonight.nvim'
     use 'projekt0n/github-nvim-theme'
 
+    use { 'nvim-lua/plenary.nvim' }
     use {
         'jose-elias-alvarez/null-ls.nvim',
         requires = { 'nvim-lua/plenary.nvim' }

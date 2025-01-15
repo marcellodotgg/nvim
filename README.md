@@ -13,7 +13,9 @@ sudo apt install software-properties-common
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update
 sudo apt install neovim
+rg --version
 ```
+1a. Install rg if you don't have it
 2. Check to see if you installed nvim `nvim --version`
 3. Create the config directory required by nvim
 
