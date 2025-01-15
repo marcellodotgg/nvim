@@ -1,4 +1,5 @@
-local lsp_zero = require('lsp-zero')
+local lsp = require('lsp-zero')
+local luasnip = require('luasnip')
 
 -- lsp_attach is where you enable features that only work
 -- if there is a language server active in the file
@@ -40,18 +41,17 @@ local lsp_attach = function(client, bufnr)
     end
 end
 
-lsp_zero.extend_lspconfig({
+lsp.extend_lspconfig({
     sign_text = true,
     lsp_attach = lsp_attach,
     capabilities = require('cmp_nvim_lsp').default_capabilities()
 })
 
 
-require('mason').setup({})
+require('mason').setup()
 require('mason-lspconfig').setup({
-    -- Replace the language servers listed here
-    -- with the ones you want to install
     ensure_installed = { 'lua_ls', 'gopls', 'rust_analyzer' },
+    automatic_installation = true,
     handlers = {
         function(server_name)
             require('lspconfig')[server_name].setup({
@@ -69,11 +69,12 @@ cmp.setup({
     },
     snippet = {
         expand = function(args)
-            -- You need Neovim v0.10 to use vim.snippet
-            vim.snippet.expand(args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     mapping = cmp.mapping.preset.insert({
         ['<cr>'] = cmp.mapping.confirm({ select = true }),
     }),
 })
+
+lsp.setup()

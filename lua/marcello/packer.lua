@@ -26,6 +26,8 @@ return require('packer').startup(function(use)
     use('tpope/vim-fugitive')
 
     use({ 'VonHeikemen/lsp-zero.nvim', branch = 'v4.x' })
+    use({ 'saadparwaiz1/cmp_luasnip' })
+    use({ 'L3MON4D3/LuaSnip' })
     use({ 'neovim/nvim-lspconfig' })
     use({ 'hrsh7th/nvim-cmp' })
     use({ 'hrsh7th/cmp-nvim-lsp' })
